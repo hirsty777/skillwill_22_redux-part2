@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { changeTodoStatusActions, deleteTodoActions } from "../store/todo/todo.actions"
+import { todoSelector} from "../store/todo/todo.slice"
+import { changeTodo, deletedTodo } from "../store/todo/todo.thunks"
 
 const useModifyTodo = (isCopleted) => {
-    const {todoList} = useSelector((state)=>state.todo)
+    const {todoList, getloader, error} = useSelector(todoSelector)
     const [todoFiltered, setTodoFiltered] = useState([])
     const dispatch = useDispatch()
 
@@ -11,14 +12,14 @@ const useModifyTodo = (isCopleted) => {
         setTodoFiltered(todoList.filter((el) => el.isCompleted === isCopleted))
     },[todoList, isCopleted])
 
-    const changeCompleteStatus = (id) => {
-        dispatch(changeTodoStatusActions(id))
+    const changeCompleteStatus = (todo) => {
+        dispatch(changeTodo({todo}))
     }
-    const deleteTodo = (id) => {
-        dispatch(deleteTodoActions(id))
+    const deleteTodoFunc = (todo) => {
+        dispatch(deletedTodo(todo))
     }
 
-    return {todoFiltered, changeCompleteStatus, deleteTodo}
+    return {todoFiltered, getloader, error, changeCompleteStatus, deleteTodoFunc}
 }
 
 export default useModifyTodo

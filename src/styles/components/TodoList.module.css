@@ -2,7 +2,7 @@
     width:100%;
     min-height: 300px;
     text-align: center;
-    color: rgb(255, 255, 255);
+    color: var(--text-color );
 }
 
 .todo-wrapper{
@@ -77,4 +77,15 @@
     outline: none;
     border: none;
     border-radius: 8px;
+}
+
+
+.loader > *{
+    display: none;
+}
+.loader{
+    background-image: url("../../assets/loading.svg");
+    background-size:50px 50px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
